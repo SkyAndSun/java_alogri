@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 后台大布局 - Layui</title>
+    <link rel="stylesheet" href="./resource/layui/css/layui.css">
+    <script src="./resource/jquery.js"></script>
+    <script src="./resource/zTree35/jquery.ztree.core-3.5.js"></script>
+    <script src="./resource/zTree35/jquery.ztree.excheck-3.5.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">所有商品</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="javascript:;">列表三</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">内容主体区域</div>
+
+        <!--  layui的树形目录  -->
+        <ul id="demo"></ul>
+
+        <!-- 树形目录2 -->
+        <div class="newpage-con">
+            <div class="block">
+                <div>
+                    <a id="systemOpenAll" href="javascript:void(0);">展开</a> | <a id="systemCloseAll" href="javascript:void(0);">缩回</a>
+                </div>
+                <div>
+                    系统功能列表[<a id="initAdd" href="javascript:void(0);">新增</a>]
+                </div>
+                <ul id="menuTree" class="ztree"></ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="./resource/layui/layui.js"></script>
+
+<!--JavaScript代码区域-->
+<script>
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "menuId",
+                pIdKey: "parentMenuId"
+            },
+            key:{
+                name:"menuName"
+            }
+        },
+        callback:{
+            onNodeCreated:NodeCreatedEvent
+        }
+    };
+
+    function NodeCreatedEvent(event, treeId, treeNode) {
+        var parentId=treeNode.menuId;
+        var parentNodeHtml= "【<a href='#' class='handle-tree' data-type='add' data-parentId = '"+ parentId +"'  >增</a>︱" +
+            "<a href='#' class='handle-tree' data-type='edit' data-parentId = '"+ parentId +"'  >改</a>︱" +
+            "<a href='#' class='handle-tree' data-type='del' data-parentId = '"+ parentId +"' >删</a>】";
+
+
+        var subNodeHtml= "【<a href='#'  class='handle-tree' data-type='edit' data-parentId = '"+ parentId +"' >改</a>︱" +
+            "<a href='#' class='handle-tree' data-type='del' data-parentId = '"+ parentId +"'>删</a>】";
+
+        console.log(treeNode);
+        if(treeNode.isMenu==1){
+            $("#"+treeNode.tId).append(parentNodeHtml);
+        }else{
+            $("#"+treeNode.tId).append(subNodeHtml);
+        }
+
+    }
+    $(document).ready(function () {
+
+
+
+        layui.use(['element','tree'], function () {
+            var element = layui.element;
+
+
+            layui.tree({
+                elem: '#demo' //传入元素选择器
+                , nodes: [{ //节点
+                    name: '父节点1'
+                    , children: [{
+                        name: '子节点11'
+                    }, {
+                        name: '子节点12'
+                    }]
+                }, {
+                    name: '父节点2（可以点左侧箭头，也可以双击标题）'
+                    , children: [{
+                        name: '子节点21'
+                        , children: [{
+                            name: '子节点211'
+                        }]
+                    }]
+                }]
+            });
+
+        });
+
+        //初始化
+      //  init();
+
+    })
+
+
+    function init() {
+        onLoadZTree();
+
+        $("#menuTree").on("click",".handle-tree",function (e) {
+            var parentId = $(this).data("parentid");
+            var type = $(this).data("type");
+
+            if(type == "add"){
+                initSave(parentId);
+            }else if(type == "edit"){
+                initModify(parentId);
+            }else if(type == "del"){
+                doRemove(parentId)
+            }
+
+        });
+
+
+    }
+
+    var sessionId = '696bb1a0bf464121a6f3c629b6f64696';
+    var  treeUrl = "http://test.nj.scn.weilian.cn/menu/getMenuList";
+    function onLoadZTree() {
+        var treeNodes;
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            data: "",
+            url: treeUrl,
+            headers:{sessionId:sessionId},
+            success: function (result) {
+                if(result.returnCode==1){
+                    treeNodes=result.data[0];
+                    $.fn.zTree.init($("#menuTree"), setting, treeNodes);
+                }else{
+                    layer.msg(result.msg);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+
+    }
+
+</script>
+</body>
+</html>

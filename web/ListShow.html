@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript" src="./resource/jquery.js"></script>
+<script type="text/javascript">
+    $(function(){
+
+        $('#mymenu dt').click(function(event) {
+            debugger
+            var dd = $(this).next('div');
+            var display = dd.css('display');
+            if (display == 'none') {
+                $("#mymenu div").hide().eq($('#mymenu dt').index(this)).show();
+            }else{
+                dd.css('display','none');
+            }
+        });
+    })
+</script>
+<div id="mymenu">
+    <dl>
+        <dt>
+            <a href="#">点击我</a>
+        </dt>
+        <div style="display:none">
+            <dd class="aaa"><a href="#">用户查询</a></dd>
+            <dd class="aaa"><a href="#">添加用户</a></dd>
+            <dd class="aaa"><a href="#">用户组</a></dd>
+        </div>
+        <dt><a href="#">点击我</a></dt>
+        <div style="display:none">
+            <dd class="aaa"><a href="#">课程列表</a></dd>
+            <dd class="aaa"><a href="#">添加课程</a></dd>
+        </div>
+    </dl>
+</div>
+</body>
+</html>

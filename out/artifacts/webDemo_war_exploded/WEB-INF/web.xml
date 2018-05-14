@@ -3,4 +3,31 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    
+    <servlet>
+        <servlet-name>myServlet</servlet-name>
+        <servlet-class>test.servlet.MyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myServlet</servlet-name>
+        <url-pattern>/myServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>myServlet2</servlet-name>
+        <servlet-class>test.servlet.MyServlet2</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myServlet2</servlet-name>
+        <url-pattern>/myServlet2</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>myServlet3</servlet-name>
+        <servlet-class>test.servlet.MyServlet3</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myServlet3</servlet-name>
+        <url-pattern>/myServlet3</url-pattern>
+    </servlet-mapping>
 </web-app>
